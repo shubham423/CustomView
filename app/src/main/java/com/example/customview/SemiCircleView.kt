@@ -40,27 +40,29 @@ class SemiCircleView(context: Context, attrs: AttributeSet?) : View(context, att
         val rectF = RectF(centerX - radius, centerY - radius, centerX + radius, centerY + radius)
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = strokeWidth
-
+        var percentageValue=0f
         for (section in sections) {
             val sectionAngle = section.value * 180 / 100
-
+            percentageValue= (percentageValue+section.value).toFloat()
             paint.color = section.color
             paint.strokeCap = Paint.Cap.ROUND
             paint.strokeJoin = Paint.Join.ROUND
             paint.style = Paint.Style.STROKE
             val path = Path()
-            if (sections.last()==section){
-                path.addArc(rectF, startAngle, sectionAngle.toFloat()-2f)
-            }else{
-                path.addArc(rectF, startAngle, sectionAngle.toFloat() -5f)
+            if (percentageValue<=100f){
+                if (sections.last()==section){
+                    path.addArc(rectF, startAngle, sectionAngle.toFloat()-2f)
+                }else{
+                    path.addArc(rectF, startAngle, sectionAngle.toFloat() -5f)
+                }
+                if (sectionAngle<=180f){
+                    canvas.drawPath(path, paint)
+                }
+                if (drawLabel){
+                    drawLabel(centerX, startAngle, sectionAngle, centerY, section, canvas)
+                }
+                startAngle += sectionAngle.toFloat()
             }
-            if (sectionAngle<=180f){
-                canvas.drawPath(path, paint)
-            }
-            if (drawLabel){
-                drawLabel(centerX, startAngle, sectionAngle, centerY, section, canvas)
-            }
-            startAngle += sectionAngle.toFloat()
         }
         // Draw spannable text in the center of the SemiCircleView
         val textPaint = TextPaint(Paint.ANTI_ALIAS_FLAG)
@@ -127,5 +129,8 @@ class SemiCircleView(context: Context, attrs: AttributeSet?) : View(context, att
 
     fun setSpannableText(spannableText: SpannedString) {
         this.spannableText = spannableText
+    }
+    fun setStrokeWidth(width:Float) {
+        this.strokeWidth=width
     }
 }

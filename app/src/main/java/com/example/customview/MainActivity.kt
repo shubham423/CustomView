@@ -16,10 +16,12 @@ class MainActivity : AppCompatActivity() {
             SemiCircleView.Section("Fats", 35.0, Color.GREEN),
             SemiCircleView.Section("Minerals", 15.0, Color.BLUE),
             SemiCircleView.Section("Vitamins", 25.0, Color.YELLOW),
+            SemiCircleView.Section("ere", 25.0, Color.BLUE),
         )
         val semiCircleView = findViewById<SemiCircleView>(R.id.semiCircleView)
         val spannableString=generateCenterSpannableText("570","Energy","Kcal")
         semiCircleView.setSpannableText(spannableString)
+        semiCircleView.setStrokeWidth(15f)
         semiCircleView.drawLabels(true)
         semiCircleView.setSections(sectionList)
     }
