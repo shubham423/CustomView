@@ -31,7 +31,6 @@ class SemiCircleView(context: Context, attrs: AttributeSet?) : View(context, att
         val rectF = RectF(centerX - radius, centerY - radius, centerX + radius, centerY + radius)
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = strokeWidth
-        paint.color=Color.WHITE
 
         for (section in sections) {
             val sectionAngle = section.value * 180 / 100
@@ -50,6 +49,8 @@ class SemiCircleView(context: Context, attrs: AttributeSet?) : View(context, att
             drawLabel(centerX, startAngle, sectionAngle, centerY, section, canvas)
             startAngle += sectionAngle.toFloat()
         }
+        //reset to initial value
+        startAngle=180f
 
         insideCircleText(centerY, canvas, centerX)
     }
